@@ -27,9 +27,9 @@ public class MoviePosterAdapter extends RecyclerView.Adapter<MoviePosterAdapter.
     public void onBindViewHolder(@NonNull MoviePosterAdapterViewHolder holder, int position) {
 
         Picasso.get()
-                .load(R.drawable.ic_launcher_foreground)
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.poster)
+                .load(R.drawable.poster)
+                .placeholder(R.color.black)
+                .error(R.drawable.ic_launcher_foreground)
                 .into(holder.moviePoster);
     }
 
