@@ -1,23 +1,65 @@
-package br.com.joaoreis.popularmovies.model;
+package br.com.joaoreis.popularmovies.home.model;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
 
 public class Movie {
+    @Expose
     private Long id;
+
+    @Expose
     private String title;
+
+    @SerializedName("original_title")
     private String originalTitle;
+
+    @SerializedName("original_language")
     private String originalLanguage;
+
+    @SerializedName("release_date")
     private Date releaseDate;
+
+    @SerializedName("genre_ids")
     private List<Integer> genreIds;
+
+    @Expose
     private String overview;
+
+    @SerializedName("poster_path")
     private String posterPath;
+
+    @SerializedName("backdrop_path")
     private String backdropPath;
+
+    @Expose
     private boolean video;
+
+    @Expose
     private boolean adult;
+
+    @SerializedName("vote_count")
     private long voteCount;
+
+    @SerializedName("vote_average")
     private double voteAverage;
+
+    @Expose
     private double popularity;
+
+    //
+//{\"vote_count\":686,\"id\":299537,\"video\":false," +
+//        "\"vote_average\":7.2,\"title\":\"Captain Marvel\",\"popularity\":424.292," +
+//        "\"poster_path\":\"\\/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg\",\"original_language\":" +
+//        "\"en\",\"original_title\":\"Captain Marvel\",\"genre_ids\":[28,12,878]," +
+//        "\"backdrop_path\":\"\\/d1hQaeKeAW3FBc3v6tIP5utleU0.jpg\",\"adult\":false," +
+//        "\"overview\":\"The story follows Carol Danvers as she becomes one of the " +
+//        "universe’s most powerful heroes when Earth is caught in the middle of a galactic " +
+//        "war between two alien races. Set in the 1990s, Captain Marvel is an all-new a" +
+//        "dventure from a previously unseen period in the history of the Marvel Cinematic " +
+//        "Universe.\",\"release_date\":\"2019-03-06\"}";;
 
     public Long getId() {
         return id;

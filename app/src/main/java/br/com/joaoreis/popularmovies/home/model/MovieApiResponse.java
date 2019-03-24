@@ -1,11 +1,25 @@
-package br.com.joaoreis.popularmovies.model;
+package br.com.joaoreis.popularmovies.home.model;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
+//TODO: abstract to return only the movie list
 public class MovieApiResponse {
+
+    @Expose
     private int page;
+
+    @SerializedName("total_pages")
     private int totalPages;
+
+    @SerializedName("total_results")
     private int totalResults;
+
+    @SerializedName("results")
     private List<Movie> movies;
 
     public int getPage() {
@@ -39,4 +53,16 @@ public class MovieApiResponse {
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
     }
+
+    @Override
+    @NonNull
+    public String toString() {
+
+        return "Page: " + page + "\n" +
+                "Total Pages: " + totalPages + "\n" +
+                "Total Results: " + totalResults + "\n" +
+                "Movies: " + movies;
+    }
 }
+
+//{"page":1,"total_results":19797,"total_pages":990,"results":
