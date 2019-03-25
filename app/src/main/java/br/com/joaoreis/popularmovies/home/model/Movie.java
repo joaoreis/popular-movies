@@ -1,12 +1,15 @@
 package br.com.joaoreis.popularmovies.home.model;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Movie {
+public class Movie implements Serializable {
     @Expose
     private Long id;
 
