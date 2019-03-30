@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -56,7 +55,6 @@ public class HomeActivity extends AppCompatActivity {
                 bundle.putSerializable(EXTRA_MOVIE, movie);
                 intent.putExtra(EXTRA_MOVIE,bundle);
 
-                Toast.makeText(HomeActivity.this, "Movie Title: " + movie.getTitle(), Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
         });
@@ -68,7 +66,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChanged(MovieApiResponse movieApiResponse) {
                 moviePosterAdapter.setMovies(movieApiResponse.getMovies());
-                Toast.makeText(HomeActivity.this, "HomeActivity onChanged", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -87,17 +84,14 @@ public class HomeActivity extends AppCompatActivity {
 
         switch (optionId) {
             case R.id.action_refresh:
-                Toast.makeText(this, "Refreshing", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.action_popular:
-                Toast.makeText(this, "Popular", Toast.LENGTH_SHORT).show();
                 viewModel.getPopularMovies();
                 return true;
 
             case R.id.action_topRated:
                 viewModel.getTopRatedMovies();
-                Toast.makeText(this, "Top Rated", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:

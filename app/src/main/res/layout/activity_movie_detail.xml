@@ -1,81 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".moviedetail.MovieDetailActivity">
 
-    <!--TODO:add scrollview -->
-    <!--Movie details layout contains title, release date, movie poster, vote average, and plot synopsis.-->
-    <ImageView
-        android:id="@+id/iv_movie_poster"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/poster" />
+        android:padding="@dimen/padding_default">
 
-    <TextView
-        android:id="@+id/tv_movie_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/title_size"
-        app:layout_constraintBottom_toTopOf="@+id/tv_movie_release_date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="MovieTitle" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
+        <ImageView
+            android:id="@+id/iv_movie_poster"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/poster" />
 
-    <TextView
-        android:id="@+id/tv_movie_release_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/title_size"
-        app:layout_constraintBottom_toTopOf="@+id/tv_vote_avg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
-        tools:text="2019" />
-
-    <TextView
-        android:id="@+id/tv_vote_avg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/title_size"
-        app:layout_constraintBottom_toTopOf="@+id/tv_synopsis"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_release_date"
-        tools:text="4.50" />
-
-    <TextView
-        android:id="@+id/tv_synopsis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_default"
-        android:textSize="@dimen/title_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_movie_poster"
-        app:layout_goneMarginEnd="@dimen/margin_default"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-           consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-           cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-           non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-           consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-           cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-           non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            app:layout_constraintBottom_toTopOf="@+id/tv_movie_release_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/vertical_guideline"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:text="@string/test_movie_title" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_movie_release_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            app:layout_constraintBottom_toTopOf="@+id/tv_vote_avg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
+            tools:text="@string/test_movie_release_date" />
+
+        <TextView
+            android:id="@+id/tv_vote_avg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_movie_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_release_date"
+            tools:text="@string/test_movie_rating" />
+
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_movie_poster"
+            tools:text="@string/test_movie_overview" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
