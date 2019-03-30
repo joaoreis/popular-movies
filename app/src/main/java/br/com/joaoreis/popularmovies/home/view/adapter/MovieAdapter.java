@@ -18,7 +18,7 @@ import br.com.joaoreis.popularmovies.home.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    private static final String BASE_URL = "https://image.tmdb.org/t/p/w185/";
+    public static final String BASE_URL = "https://image.tmdb.org/t/p/w185/";
 
     private List<Movie> movies = new ArrayList<>();
     private OnItemClickListener listener;
