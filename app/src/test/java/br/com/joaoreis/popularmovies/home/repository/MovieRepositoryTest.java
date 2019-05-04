@@ -1,14 +1,13 @@
 package br.com.joaoreis.popularmovies.home.repository;
 
-import android.util.Log;
+import androidx.lifecycle.LiveData;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import androidx.lifecycle.LiveData;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class MovieRepositoryTest {
     private MovieRepository repository;

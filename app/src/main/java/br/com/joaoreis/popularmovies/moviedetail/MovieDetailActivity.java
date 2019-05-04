@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
 import br.com.joaoreis.popularmovies.R;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.view.ui.HomeActivity;
@@ -39,7 +40,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Intent callingIntent = getIntent();
         Bundle extras = callingIntent.getBundleExtra(HomeActivity.EXTRA_MOVIE);
-        Movie movie = (Movie) extras.getSerializable(HomeActivity.EXTRA_MOVIE);
+        Movie movie = extras.getParcelable(HomeActivity.EXTRA_MOVIE);
         viewModel.setMovie(movie);
 
         loadMovieData(movie);

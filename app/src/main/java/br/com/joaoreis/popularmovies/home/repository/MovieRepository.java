@@ -2,10 +2,11 @@ package br.com.joaoreis.popularmovies.home.repository;
 
 import android.util.Log;
 
-import javax.inject.Singleton;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import javax.inject.Singleton;
+
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.services.MoviesService;
 import retrofit2.Call;
@@ -32,7 +33,7 @@ public class MovieRepository {
             @Override
             public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    movies.setValue(response.body());
+                    movies.postValue(response.body());
                 } else {
                     Log.e(TAG, "onResponse: failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
                 }
