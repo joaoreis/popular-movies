@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".moviedetail.MovieDetailActivity"
+            android:name=".moviedetail.view.ui.MovieDetailActivity"
             android:parentActivityName=".home.view.ui.HomeActivity"
             android:windowSoftInputMode="adjustResize"
             />

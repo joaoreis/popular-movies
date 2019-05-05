@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.io.IOException;
 
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.model.ReviewsApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -14,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MoviesServiceTest {
     private MoviesService moviesService;
+    private final String apiKey = MoviesService.API_KEY;
 
     @Before
     public void setUp() {
@@ -22,7 +25,7 @@ public class MoviesServiceTest {
 
     @Test
     public void getPopularMovies() throws IOException {
-        Call<MovieApiResponse> call = moviesService.getMovies("popular", MoviesService.API_KEY);
+        Call<MovieApiResponse> call = moviesService.getMovies("popular", apiKey);
         assertNotNull(call);
         Response<MovieApiResponse> response = call.execute();
         assertNotNull(response);
@@ -33,11 +36,33 @@ public class MoviesServiceTest {
 
     @Test
     public void getTopRatedMovies() throws IOException {
-        Call<MovieApiResponse> call = moviesService.getMovies("top_rated", MoviesService.API_KEY);
+        Call<MovieApiResponse> call = moviesService.getMovies("top_rated", apiKey);
         assertNotNull(call);
         Response<MovieApiResponse> response = call.execute();
         assertNotNull(response);
         assertTrue(response.isSuccessful());
         assertNotNull(response.body());
     }
+
+    @Test
+    public void gettrailers() throws IOException {
+        int movieId = 550;
+        Call<TrailerApiResponse> call = moviesService.getTrailers(movieId, apiKey);
+        assertNotNull(call);
+        Response<TrailerApiResponse> response = call.execute();
+        assertNotNull(response);
+        assertTrue(response.isSuccessful());
+        assertNotNull(response.body());
+    }
+
+    @Test
+    public void getReviews() throws IOException {
+        int movieId = 550;
+        Call<ReviewsApiResponse> call = moviesService.getReviews(movieId, apiKey);
+        Response<ReviewsApiResponse> response = call.execute();
+        assertNotNull(response);
+        assertTrue(response.isSuccessful());
+        assertNotNull(response.body());
+    }
+
 }
