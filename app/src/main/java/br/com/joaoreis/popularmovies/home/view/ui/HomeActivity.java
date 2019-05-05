@@ -2,6 +2,7 @@ package br.com.joaoreis.popularmovies.home.view.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import br.com.joaoreis.popularmovies.R;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
@@ -22,7 +24,9 @@ import br.com.joaoreis.popularmovies.moviedetail.MovieDetailActivity;
 public class HomeActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE = "movie";
-    private static final int N_COLUMNS = 2;
+    private static int MINIMUM_COLUMNS = 2;
+    private static int SCALING_FACTOR = 200;
+    private static int N_COLUMNS;
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private RecyclerView recyclerView;
@@ -33,9 +37,18 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        N_COLUMNS = calculateNoOfColumns();
         setupViews();
         setupViewModel();
 
+    }
+
+    private int calculateNoOfColumns() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int noOfColumns = (int) (dpWidth / SCALING_FACTOR);
+
+        return noOfColumns < MINIMUM_COLUMNS ? MINIMUM_COLUMNS : noOfColumns;
     }
 
     private void setupViews() {
@@ -52,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onItemClick(Movie movie) {
                 Intent intent = new Intent(HomeActivity.this, MovieDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(EXTRA_MOVIE, movie);
+                bundle.putParcelable(EXTRA_MOVIE, movie);
                 intent.putExtra(EXTRA_MOVIE,bundle);
 
                 startActivity(intent);

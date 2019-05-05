@@ -1,11 +1,11 @@
 package br.com.joaoreis.popularmovies.home.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 //TODO: abstract to return only the movie list
 public class MovieApiResponse {
@@ -48,10 +48,6 @@ public class MovieApiResponse {
 
     public List<Movie> getMovies() {
         return movies;
-    }
-
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
     }
 
     @Override
