@@ -25,12 +25,7 @@ public class MoviesService implements TheMovieDBApi {
     }
 
     @Override
-    public Call<MovieApiResponse> getPopularMovies(String key) {
-        return movieApi.getPopularMovies(API_KEY);
-    }
-
-    @Override
-    public Call<MovieApiResponse> getTopRatedMovies(String key) {
-        return movieApi.getTopRatedMovies(API_KEY);
+    public Call<MovieApiResponse> getMovies(String sortBy, String key) {
+        return movieApi.getMovies(sortBy, key);
     }
 }

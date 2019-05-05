@@ -1,10 +1,11 @@
 package br.com.joaoreis.popularmovies.home.viewmodel;
 
-import javax.inject.Inject;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import javax.inject.Inject;
+
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.home.repository.MovieRepository;
 
@@ -12,6 +13,9 @@ public class HomeViewModel extends ViewModel {
 
     private final MovieRepository movieRepo;
     private LiveData<MovieApiResponse> movieList;
+
+    private static final String POPULAR = "popular";
+    private static final String TOP_RATED = "top_rated";
 
     //TODO: no dependecy injection, refactor
     public HomeViewModel() {
@@ -25,12 +29,12 @@ public class HomeViewModel extends ViewModel {
     }
 
     public LiveData<MovieApiResponse> getPopularMovies() {
-        movieList = movieRepo.getPopularMovies();
+        movieList = movieRepo.getMovies(POPULAR);
         return this.movieList;
     }
 
     public LiveData<MovieApiResponse> getTopRatedMovies() {
-        movieList = movieRepo.getTopRatedMovies();
+        movieList = movieRepo.getMovies(TOP_RATED);
         return this.movieList;
     }
 }
