@@ -19,8 +19,8 @@ public class MovieRepositoryTest {
 
     @Test
     public void getPopularMovies() {
-        LiveData<MovieApiResponse> movies = repository.getPopularMovies();
+        LiveData<MovieApiResponse> movies = repository.getMovies("popular");
         assertNotNull(movies);
-        System.out.println("getPopularMovies: " + movies.toString() );
+        System.out.println("getMovies: " + movies.toString() );
     }
 }

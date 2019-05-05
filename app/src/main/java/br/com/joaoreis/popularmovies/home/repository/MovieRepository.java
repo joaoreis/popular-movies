@@ -25,37 +25,14 @@ public class MovieRepository {
         movies = new MutableLiveData<>();
     }
 
-    //FIXME: suboptimal implementation
-    public LiveData<MovieApiResponse> getPopularMovies() {
-        Call<MovieApiResponse> call = moviesService.getPopularMovies(MoviesService.API_KEY);
+    public LiveData<MovieApiResponse> getMovies(String sortBy) {
+        Call<MovieApiResponse> call = moviesService.getMovies(sortBy, MoviesService.API_KEY);
 
         call.enqueue(new Callback<MovieApiResponse>() {
             @Override
             public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     movies.postValue(response.body());
-                } else {
-                    Log.e(TAG, "onResponse: failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MovieApiResponse> call, Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-            }
-        });
-
-        return movies;
-    }
-
-    public LiveData<MovieApiResponse> getTopRatedMovies() {
-        Call<MovieApiResponse> call = moviesService.getTopRatedMovies(MoviesService.API_KEY);
-
-        call.enqueue(new Callback<MovieApiResponse>() {
-            @Override
-            public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    movies.setValue(response.body());
                 } else {
                     Log.e(TAG, "onResponse: failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
                 }
