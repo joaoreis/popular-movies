@@ -1,4 +1,4 @@
-package br.com.joaoreis.popularmovies.moviedetail;
+package br.com.joaoreis.popularmovies.moviedetail.view.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import java.util.Locale;
 import br.com.joaoreis.popularmovies.R;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.view.ui.HomeActivity;
+import br.com.joaoreis.popularmovies.moviedetail.viewmodel.MovieDetailViewModel;
 
 import static br.com.joaoreis.popularmovies.home.view.adapter.MovieAdapter.BASE_URL;
 

@@ -19,7 +19,7 @@ import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.home.view.adapter.MovieAdapter;
 import br.com.joaoreis.popularmovies.home.view.adapter.OnItemClickListener;
 import br.com.joaoreis.popularmovies.home.viewmodel.HomeViewModel;
-import br.com.joaoreis.popularmovies.moviedetail.MovieDetailActivity;
+import br.com.joaoreis.popularmovies.moviedetail.view.ui.MovieDetailActivity;
 
 public class HomeActivity extends AppCompatActivity {
 

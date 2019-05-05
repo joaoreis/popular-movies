@@ -1,4 +1,4 @@
-package br.com.joaoreis.popularmovies.moviedetail;
+package br.com.joaoreis.popularmovies.moviedetail.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
