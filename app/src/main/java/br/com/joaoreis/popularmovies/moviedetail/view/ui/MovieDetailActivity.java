@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,6 +18,7 @@ import java.util.Locale;
 import br.com.joaoreis.popularmovies.R;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.view.ui.HomeActivity;
+import br.com.joaoreis.popularmovies.moviedetail.view.adapter.ReviewAdapter;
 import br.com.joaoreis.popularmovies.moviedetail.viewmodel.MovieDetailViewModel;
 
 import static br.com.joaoreis.popularmovies.home.view.adapter.MovieAdapter.BASE_URL;
@@ -30,6 +32,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView tvMovieReleaseDate;
     private TextView tvVoteAvg;
     private TextView tvOverview;
+
+    private RecyclerView recyclerView;
+    private ReviewAdapter moviePosterAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
