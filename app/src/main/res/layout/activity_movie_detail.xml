@@ -75,21 +75,57 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
             android:textSize="@dimen/title_size"
+            app:layout_constraintBottom_toTopOf="@id/tv_reviews_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_movie_poster"
             tools:text="@string/test_movie_overview" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        <TextView
+            android:id="@+id/tv_reviews_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:padding="@dimen/padding_default"
+            android:text="@string/reviews"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/title_size"
+            app:layout_constraintBottom_toTopOf="@+id/reviews_recyclerview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_overview"
-            tools:itemCount="3"
-            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:text="@string/reviews" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviews_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reviews_label"
+            tools:listitem="@layout/rv_review_item" />
+
+        <TextView
+            android:id="@+id/tv_trailers_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:padding="@dimen/padding_default"
+            android:text="@string/trailers"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/title_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reviews_recyclerview"
+            tools:text="@string/trailers" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trailers_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_trailers_label"
             tools:listitem="@layout/rv_trailer_item" />
 
 

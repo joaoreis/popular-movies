@@ -10,4 +10,7 @@
     <string name="author_label">Author: </string>
     <string name="author">John Doe</string>
     <string name="review_label">Review: </string>
+    <string name="reviews">Movie Reviews</string>
+    <string name="trailers">Trailers</string>
+
 </resources>

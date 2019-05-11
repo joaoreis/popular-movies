@@ -2,7 +2,7 @@ package br.com.joaoreis.popularmovies.services;
 
 import br.com.joaoreis.popularmovies.BuildConfig;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
-import br.com.joaoreis.popularmovies.moviedetail.model.ReviewsApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -32,12 +32,12 @@ public class MoviesService implements TheMovieDBApi {
     }
 
     @Override
-    public Call<TrailerApiResponse> getTrailers(int movieId, String key) {
+    public Call<TrailerApiResponse> getTrailers(Long movieId, String key) {
         return movieApi.getTrailers(movieId, key);
     }
 
     @Override
-    public Call<ReviewsApiResponse> getReviews(int movieId, String key) {
+    public Call<ReviewApiResponse> getReviews(Long movieId, String key) {
         return movieApi.getReviews(movieId,key);
     }
 }

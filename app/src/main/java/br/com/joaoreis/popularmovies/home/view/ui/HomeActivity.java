@@ -17,7 +17,7 @@ import br.com.joaoreis.popularmovies.R;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.home.view.adapter.MovieAdapter;
-import br.com.joaoreis.popularmovies.home.view.adapter.OnItemClickListener;
+import br.com.joaoreis.popularmovies.home.view.adapter.OnMovieItemClickListener;
 import br.com.joaoreis.popularmovies.home.viewmodel.HomeViewModel;
 import br.com.joaoreis.popularmovies.moviedetail.view.ui.MovieDetailActivity;
 
@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(moviePosterAdapter);
 
-        moviePosterAdapter.setOnItemClickListener(new OnItemClickListener() {
+        moviePosterAdapter.setOnItemClickListener(new OnMovieItemClickListener() {
             @Override
             public void onItemClick(Movie movie) {
                 Intent intent = new Intent(HomeActivity.this, MovieDetailActivity.class);

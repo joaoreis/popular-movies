@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ReviewsApiResponse implements Parcelable {
+public class ReviewApiResponse implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -16,32 +16,33 @@ public class ReviewsApiResponse implements Parcelable {
     @SerializedName("page")
     @Expose
     public Integer page;
-    @SerializedName("reviews")
+    @SerializedName("results")
     @Expose
-    public List<Review> reviews = null;
+    public List<Review> reviews;
     @SerializedName("total_pages")
     @Expose
     public Integer totalPages;
     @SerializedName("total_results")
     @Expose
     public Integer totalResults;
-    public final static Parcelable.Creator<ReviewsApiResponse> CREATOR = new Creator<ReviewsApiResponse>() {
+
+    public final static Parcelable.Creator<ReviewApiResponse> CREATOR = new Creator<ReviewApiResponse>() {
 
 
         @SuppressWarnings({
                 "unchecked"
         })
-        public ReviewsApiResponse createFromParcel(Parcel in) {
-            return new ReviewsApiResponse(in);
+        public ReviewApiResponse createFromParcel(Parcel in) {
+            return new ReviewApiResponse(in);
         }
 
-        public ReviewsApiResponse[] newArray(int size) {
-            return (new ReviewsApiResponse[size]);
+        public ReviewApiResponse[] newArray(int size) {
+            return (new ReviewApiResponse[size]);
         }
 
     };
 
-    protected ReviewsApiResponse(Parcel in) {
+    protected ReviewApiResponse(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.page = ((Integer) in.readValue((Integer.class.getClassLoader())));
         in.readList(this.reviews, (br.com.joaoreis.popularmovies.moviedetail.model.Review.class.getClassLoader()));
@@ -49,7 +50,7 @@ public class ReviewsApiResponse implements Parcelable {
         this.totalResults = ((Integer) in.readValue((Integer.class.getClassLoader())));
     }
 
-    public ReviewsApiResponse() {
+    public ReviewApiResponse() {
     }
 
     public void writeToParcel(Parcel dest, int flags) {
@@ -63,5 +64,10 @@ public class ReviewsApiResponse implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
 
 }

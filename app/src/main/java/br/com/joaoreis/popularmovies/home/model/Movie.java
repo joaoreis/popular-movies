@@ -52,6 +52,10 @@ public class Movie implements Parcelable {
     @Expose
     private double popularity;
 
+    public Long getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }

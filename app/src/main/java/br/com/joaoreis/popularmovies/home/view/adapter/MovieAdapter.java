@@ -22,7 +22,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public static final String BASE_URL = "https://image.tmdb.org/t/p/w185/";
 
     private List<Movie> movies = new ArrayList<>();
-    private OnItemClickListener listener;
+    private OnMovieItemClickListener listener;
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
@@ -78,7 +78,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnMovieItemClickListener listener) {
         this.listener = listener;
     }
 
