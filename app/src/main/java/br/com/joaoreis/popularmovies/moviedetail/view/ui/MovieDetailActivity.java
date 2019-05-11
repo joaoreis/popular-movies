@@ -1,7 +1,9 @@
 package br.com.joaoreis.popularmovies.moviedetail.view.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +24,9 @@ import br.com.joaoreis.popularmovies.R;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.view.ui.HomeActivity;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.model.Trailer;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.view.adapter.OnTrailerItemClickListener;
 import br.com.joaoreis.popularmovies.moviedetail.view.adapter.ReviewAdapter;
 import br.com.joaoreis.popularmovies.moviedetail.view.adapter.TrailerAdapter;
 import br.com.joaoreis.popularmovies.moviedetail.viewmodel.MovieDetailViewModel;
@@ -31,6 +35,7 @@ import static br.com.joaoreis.popularmovies.home.view.adapter.MovieAdapter.BASE_
 
 public class MovieDetailActivity extends AppCompatActivity {
 
+    public static final String YOUTUBE_URL = "www.youtube.com";
     private MovieDetailViewModel viewModel;
 
     private ImageView ivMoviePoster;
@@ -83,6 +88,27 @@ public class MovieDetailActivity extends AppCompatActivity {
         reviewsRecyclerView.setLayoutManager(trailerLayoutManager);
         reviewsRecyclerView.setAdapter(trailerAdapter);
         reviewsRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+
+        trailerAdapter.setOnItemClickListener(new OnTrailerItemClickListener() {
+            @Override
+            public void onItemClick(Trailer trailer) {
+
+                Uri trailerUri = new Uri.Builder()
+                        .scheme("http")
+                        .appendPath(YOUTUBE_URL)
+                        .appendPath("watch")
+                        .appendQueryParameter("v",trailer.key)
+                        .build();
+
+                Log.d("trailerClick", "onItemClick: " + trailerUri.toString());
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(trailerUri);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+
+            }
+        });
     }
 
     private void setupViewModel() {

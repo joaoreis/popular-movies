@@ -19,6 +19,8 @@ import br.com.joaoreis.popularmovies.moviedetail.model.Trailer;
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerAdapterViewHolder> {
 
     private List<Trailer> trailers = new ArrayList<>();
+    private OnTrailerItemClickListener listener;
+
 
     public void setTrailers(List<Trailer> trailers) {
         this.trailers = trailers;
@@ -57,7 +59,20 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
             super(itemView);
             trailerName = itemView.findViewById(R.id.tv_trailer_name);
             playButton = itemView.findViewById(R.id.iv_play_button);
-            //TODO: add link
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(trailers.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public void setOnItemClickListener(OnTrailerItemClickListener listener) {
+        this.listener = listener;
     }
 }
