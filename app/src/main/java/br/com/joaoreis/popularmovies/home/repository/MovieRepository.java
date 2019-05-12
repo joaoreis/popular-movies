@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import javax.inject.Singleton;
 
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
-import br.com.joaoreis.popularmovies.moviedetail.model.ReviewsApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
 import br.com.joaoreis.popularmovies.services.MoviesService;
 import retrofit2.Call;
@@ -21,7 +21,7 @@ public class MovieRepository {
     private static final String TAG = MovieRepository.class.getName();
     private final String apiKey = MoviesService.API_KEY;
     private MoviesService moviesService;
-    private final MutableLiveData<ReviewsApiResponse> reviews;
+    private final MutableLiveData<ReviewApiResponse> reviews;
     private MutableLiveData<MovieApiResponse> movies;
     private final MutableLiveData<TrailerApiResponse> trailers;
 
@@ -54,7 +54,7 @@ public class MovieRepository {
         return movies;
     }
 
-    public LiveData<TrailerApiResponse> getTrailers(int movieId) {
+    public LiveData<TrailerApiResponse> getTrailers(Long movieId) {
         Call<TrailerApiResponse> call = moviesService.getTrailers(movieId, apiKey);
         call.enqueue(new Callback<TrailerApiResponse>() {
             @Override
@@ -76,21 +76,21 @@ public class MovieRepository {
         return trailers;
     }
 
-    public LiveData<ReviewsApiResponse> getReviews(int movieId) {
-        Call<ReviewsApiResponse> call = moviesService.getReviews(movieId, apiKey);
-        call.enqueue(new Callback<ReviewsApiResponse>() {
+    public LiveData<ReviewApiResponse> getReviews(Long movieId) {
+        Call<ReviewApiResponse> call = moviesService.getReviews(movieId, apiKey);
+        call.enqueue(new Callback<ReviewApiResponse>() {
             @Override
-            public void onResponse(Call<ReviewsApiResponse> call, Response<ReviewsApiResponse> response) {
+            public void onResponse(Call<ReviewApiResponse> call, Response<ReviewApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     reviews.postValue(response.body());
                 }
                 else {
-                    Log.e(TAG, "onResponse: getReviews failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
+                    Log.e(TAG, "onResponse: getReviewList failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<ReviewsApiResponse> call, Throwable t) {
+            public void onFailure(Call<ReviewApiResponse> call, Throwable t) {
                 Log.e(TAG, "onFailure: ", t);
             }
         });

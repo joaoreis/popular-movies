@@ -26,6 +26,7 @@ public class HomeViewModel extends ViewModel {
     @Inject
     public HomeViewModel(MovieRepository movieRepository) {
         movieRepo = movieRepository;
+        movieList = new MutableLiveData<>();
     }
 
     public LiveData<MovieApiResponse> getPopularMovies() {

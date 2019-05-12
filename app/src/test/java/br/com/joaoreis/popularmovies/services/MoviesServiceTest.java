@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
-import br.com.joaoreis.popularmovies.moviedetail.model.ReviewsApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -58,8 +58,8 @@ public class MoviesServiceTest {
     @Test
     public void getReviews() throws IOException {
         int movieId = 550;
-        Call<ReviewsApiResponse> call = moviesService.getReviews(movieId, apiKey);
-        Response<ReviewsApiResponse> response = call.execute();
+        Call<ReviewApiResponse> call = moviesService.getReviews(movieId, apiKey);
+        Response<ReviewApiResponse> response = call.execute();
         assertNotNull(response);
         assertTrue(response.isSuccessful());
         assertNotNull(response.body());

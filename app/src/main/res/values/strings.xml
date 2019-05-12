@@ -7,4 +7,10 @@
     <string name="test_movie_release_date">2019</string>
     <string name="test_movie_title">Very biiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiig MovieTitle</string>
     <string name="test_movie_rating">7.25</string>
+    <string name="author_label">Author: </string>
+    <string name="author">John Doe</string>
+    <string name="review_label">Review: </string>
+    <string name="reviews">Movie Reviews</string>
+    <string name="trailers">Trailers</string>
+
 </resources>

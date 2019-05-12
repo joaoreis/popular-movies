@@ -6,13 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import br.com.joaoreis.popularmovies.R;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 
@@ -21,11 +22,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public static final String BASE_URL = "https://image.tmdb.org/t/p/w185/";
 
     private List<Movie> movies = new ArrayList<>();
-    private OnItemClickListener listener;
+    private OnMovieItemClickListener listener;
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
-        //FIXME: fix this, do not call this method
+        //FIXME: do not call this method
         notifyDataSetChanged();
     }
 
@@ -77,7 +78,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnMovieItemClickListener listener) {
         this.listener = listener;
     }
 
