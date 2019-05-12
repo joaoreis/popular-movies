@@ -3,9 +3,10 @@ package br.com.joaoreis.popularmovies.moviedetail.view.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -39,6 +40,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private MovieDetailViewModel viewModel;
 
     private ImageView ivMoviePoster;
+    private ImageView ivStar;
     private TextView tvMovieTitle;
     private TextView tvMovieReleaseDate;
     private TextView tvVoteAvg;
@@ -68,27 +70,38 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void setupViews() {
-        LinearLayoutManager reviewLayoutManager = new LinearLayoutManager(this);
-        LinearLayoutManager trailerLayoutManager = new LinearLayoutManager(this);
-        reviewAdapter = new ReviewAdapter();
-        trailerAdapter = new TrailerAdapter();
+        findViews();
+        setupRecyclerViews();
+        setupClickListeners();
+    }
 
+    private void findViews() {
         ivMoviePoster = findViewById(R.id.iv_movie_poster);
         tvMovieTitle = findViewById(R.id.tv_movie_title);
         tvMovieReleaseDate = findViewById(R.id.tv_movie_release_date);
         tvVoteAvg = findViewById(R.id.tv_vote_avg);
         tvOverview = findViewById(R.id.tv_overview);
-
+        ivStar = findViewById(R.id.iv_star);
         reviewsRecyclerView = findViewById(R.id.reviews_recyclerview);
+        trailersRecyclerView = findViewById(R.id.trailers_recyclerview);
+    }
+
+    private void setupRecyclerViews() {
+        LinearLayoutManager reviewLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager trailerLayoutManager = new LinearLayoutManager(this);
+        reviewAdapter = new ReviewAdapter();
+        trailerAdapter = new TrailerAdapter();
+
         reviewsRecyclerView.setLayoutManager(reviewLayoutManager);
         reviewsRecyclerView.setAdapter(reviewAdapter);
-        reviewsRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        reviewsRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        reviewsRecyclerView = findViewById(R.id.trailers_recyclerview);
-        reviewsRecyclerView.setLayoutManager(trailerLayoutManager);
-        reviewsRecyclerView.setAdapter(trailerAdapter);
-        reviewsRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        trailersRecyclerView.setLayoutManager(trailerLayoutManager);
+        trailersRecyclerView.setAdapter(trailerAdapter);
+        trailersRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
 
+    private void setupClickListeners() {
         trailerAdapter.setOnItemClickListener(new OnTrailerItemClickListener() {
             @Override
             public void onItemClick(Trailer trailer) {
@@ -97,16 +110,23 @@ public class MovieDetailActivity extends AppCompatActivity {
                         .scheme("http")
                         .appendPath(YOUTUBE_URL)
                         .appendPath("watch")
-                        .appendQueryParameter("v",trailer.key)
+                        .appendQueryParameter("v", trailer.key)
                         .build();
 
-                Log.d("trailerClick", "onItemClick: " + trailerUri.toString());
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(trailerUri);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
 
+            }
+        });
+
+        ivStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MovieDetailActivity.this, "Added to Favorites!", Toast.LENGTH_SHORT).show();
+                ((ImageView) v).setImageResource(R.drawable.ic_star_yellow_48dp);
             }
         });
     }

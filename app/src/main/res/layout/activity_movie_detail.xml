@@ -32,13 +32,9 @@
 
         <TextView
             android:id="@+id/tv_movie_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/title_size"
+            style="@style/detailText"
             app:layout_constraintBottom_toTopOf="@+id/tv_movie_release_date"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/vertical_guideline"
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside"
@@ -47,10 +43,7 @@
 
         <TextView
             android:id="@+id/tv_movie_release_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/title_size"
+            style="@style/detailText"
             app:layout_constraintBottom_toTopOf="@+id/tv_vote_avg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
@@ -59,15 +52,24 @@
 
         <TextView
             android:id="@+id/tv_vote_avg"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/title_size"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_movie_poster"
+            style="@style/detailText"
+            app:layout_constraintBottom_toTopOf="@+id/iv_star"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
             app:layout_constraintTop_toBottomOf="@+id/tv_movie_release_date"
+            tools:layout_editor_absoluteX="206dp"
             tools:text="@string/test_movie_rating" />
+
+        <ImageView
+            android:id="@+id/iv_star"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star_border_yellow_48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_movie_poster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_vote_avg"
+            tools:layout_editor_absoluteX="206dp" />
 
         <TextView
             android:id="@+id/tv_overview"
