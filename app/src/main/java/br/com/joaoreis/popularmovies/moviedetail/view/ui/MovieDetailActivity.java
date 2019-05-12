@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import br.com.joaoreis.popularmovies.R;
+import br.com.joaoreis.popularmovies.database.Favorite;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.view.ui.HomeActivity;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
@@ -125,8 +126,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         ivStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MovieDetailActivity.this, "Added to Favorites!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MovieDetailActivity.this, "Added to Favorite!", Toast.LENGTH_SHORT).show();
                 ((ImageView) v).setImageResource(R.drawable.ic_star_yellow_48dp);
+
+                Movie movie = viewModel.getMovie().getValue();
+                Favorite favorite = new Favorite(movie.getId(), movie.getTitle());
+
             }
         });
     }
