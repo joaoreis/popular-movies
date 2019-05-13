@@ -12,5 +12,6 @@
     <string name="review_label">Review: </string>
     <string name="reviews">Movie Reviews</string>
     <string name="trailers">Trailers</string>
-
+    <string name="toast_add_favorites">Added to Favorites</string>
+    <string name="toast_remove_favorites">Removed from Favorites</string>
 </resources>

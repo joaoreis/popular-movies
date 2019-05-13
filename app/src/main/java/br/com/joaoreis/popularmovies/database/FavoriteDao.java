@@ -22,4 +22,7 @@ public interface FavoriteDao {
 
     @Delete
     void deleteFavorite(Favorite favorite);
+
+    @Query("DELETE FROM favorites")
+    void deleteAllFavorites();
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -57,16 +58,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-
         setupViews();
-        viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
 
         Intent callingIntent = getIntent();
         Bundle extras = callingIntent.getBundleExtra(HomeActivity.EXTRA_MOVIE);
         Movie movie = extras.getParcelable(HomeActivity.EXTRA_MOVIE);
-        viewModel.setMovie(movie);
-        setupViewModel();
 
+        setupViewModel(movie);
         loadMovieData(movie);
     }
 
@@ -119,24 +117,32 @@ public class MovieDetailActivity extends AppCompatActivity {
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
-
             }
         });
 
         ivStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MovieDetailActivity.this, "Added to Favorite!", Toast.LENGTH_SHORT).show();
-                ((ImageView) v).setImageResource(R.drawable.ic_star_yellow_48dp);
 
-                Movie movie = viewModel.getMovie().getValue();
-                Favorite favorite = new Favorite(movie.getId(), movie.getTitle());
+                LiveData<Favorite> favorite = viewModel.getFavorite();
+                if (favorite.getValue() == null) {
+                    Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_add_favorites), Toast.LENGTH_SHORT).show();
+                    ((ImageView) v).setImageResource(R.drawable.ic_star_yellow_48dp);
+                    viewModel.addFavorite();
+                } else {
+                    Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_remove_favorites), Toast.LENGTH_SHORT).show();
+                    ((ImageView) v).setImageResource(R.drawable.ic_star_border_yellow_48dp);
+                    viewModel.removeFavorite();
+                }
 
             }
         });
     }
 
-    private void setupViewModel() {
+    private void setupViewModel(Movie movie) {
+        viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
+        viewModel.setMovie(movie);
+
         viewModel.getReviewList().observe(this, new Observer<ReviewApiResponse>() {
             @Override
             public void onChanged(ReviewApiResponse reviewApiResponse) {
@@ -150,6 +156,18 @@ public class MovieDetailActivity extends AppCompatActivity {
                 trailerAdapter.setTrailers(trailerApiResponse.getTrailers());
             }
         });
+
+        //FIXME: not sure if correct
+//        viewModel.getFavorite().observe(this, new Observer<Favorite>() {
+//            @Override
+//            public void onChanged(Favorite favorite) {
+//                if (favorite == null) {
+//                    ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
+//                } else {
+//                    ivStar.setImageResource(R.drawable.ic_star_yellow_48dp);
+//                }
+//            }
+//        });
     }
 
     private void loadMovieData(Movie movie) {
@@ -165,5 +183,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         tvMovieReleaseDate.setText(new SimpleDateFormat("yyyy", Locale.getDefault()).format(releaseDate));
         tvVoteAvg.setText(String.valueOf(movie.getVoteAverage()));
         tvOverview.setText(movie.getOverview());
+
     }
 }
