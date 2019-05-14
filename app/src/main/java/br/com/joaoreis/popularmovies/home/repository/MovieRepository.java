@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import javax.inject.Singleton;
 
+import br.com.joaoreis.popularmovies.database.AppDatabase;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
@@ -29,7 +30,7 @@ public class MovieRepository {
         moviesService = new MoviesService();
         movies = new MutableLiveData<>();
         trailers = new MutableLiveData<>();
-        reviews = new MutableLiveData<>();
+        reviews = new MutableLiveData<>();;
     }
 
     public LiveData<MovieApiResponse> getMovies(String sortBy) {

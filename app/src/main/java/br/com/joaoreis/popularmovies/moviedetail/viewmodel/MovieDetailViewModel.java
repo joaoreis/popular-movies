@@ -47,6 +47,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
 
         database = AppDatabase.getInstance(application);
         favorite = new MutableLiveData<>();
+        //TODO:remember to delete
         database.favoriteDao().deleteAllFavorites();
     }
 
@@ -68,7 +69,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
         return trailerList;
     }
 
-    public LiveData<Favorite> getFavorite() {
+    private LiveData<Favorite> getFavorite() {
         final long id = movie.getValue().getId();
 
         new AppExecutors().diskIO().execute(new Runnable() {
@@ -79,6 +80,12 @@ public class MovieDetailViewModel extends AndroidViewModel {
         });
 
         return favorite;
+    }
+
+    public LiveData<Boolean> isMovieFavorite() {
+        LiveData<Boolean> isFavorite = new MutableLiveData<>();
+        ((MutableLiveData<Boolean>) isFavorite).setValue(getFavorite().getValue() != null);
+        return isFavorite;
     }
 
     public void addFavorite() {

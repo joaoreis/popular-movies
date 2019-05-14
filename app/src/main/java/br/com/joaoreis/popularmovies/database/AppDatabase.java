@@ -6,6 +6,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import javax.inject.Singleton;
+
+@Singleton
 @Database(entities = {Favorite.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
