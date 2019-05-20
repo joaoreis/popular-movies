@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import javax.inject.Singleton;
 
+import br.com.joaoreis.popularmovies.database.AppDatabase;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
@@ -41,7 +42,7 @@ public class MovieRepository {
                 if (response.isSuccessful() && response.body() != null) {
                     movies.postValue(response.body());
                 } else {
-                    Log.e(TAG, "onResponse: getMovies failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
+                    Log.e(TAG, "onResponse: getMovies failed or body is null: \n" + response.isSuccessful() + "\n" + response.toString());
                 }
             }
 

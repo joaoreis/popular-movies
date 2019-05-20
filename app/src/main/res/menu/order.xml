@@ -15,8 +15,14 @@
         android:title="@string/action_topRated"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_refresh"
+        android:id="@+id/action_favorites"
         android:orderInCategory="3"
+        android:title="@string/action_favorites"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="4"
         android:title="@string/action_refresh"
         app:showAsAction="ifRoom" />
 
