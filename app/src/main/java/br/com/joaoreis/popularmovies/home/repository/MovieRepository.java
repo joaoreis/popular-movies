@@ -30,7 +30,7 @@ public class MovieRepository {
         moviesService = new MoviesService();
         movies = new MutableLiveData<>();
         trailers = new MutableLiveData<>();
-        reviews = new MutableLiveData<>();;
+        reviews = new MutableLiveData<>();
     }
 
     public LiveData<MovieApiResponse> getMovies(String sortBy) {
@@ -42,7 +42,7 @@ public class MovieRepository {
                 if (response.isSuccessful() && response.body() != null) {
                     movies.postValue(response.body());
                 } else {
-                    Log.e(TAG, "onResponse: getMovies failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
+                    Log.e(TAG, "onResponse: getMovies failed or body is null: \n" + response.isSuccessful() + "\n" + response.toString());
                 }
             }
 
