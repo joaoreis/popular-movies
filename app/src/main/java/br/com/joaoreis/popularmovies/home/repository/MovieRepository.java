@@ -3,7 +3,9 @@ package br.com.joaoreis.popularmovies.home.repository;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import javax.inject.Singleton;
 
@@ -66,8 +68,7 @@ public class MovieRepository {
             public void onResponse(Call<TrailerApiResponse> call, Response<TrailerApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     trailers.postValue(response.body());
-                }
-                else {
+                } else {
                     Log.e(TAG, "onResponse: getTrailers failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
                 }
             }
@@ -88,8 +89,7 @@ public class MovieRepository {
             public void onResponse(Call<ReviewApiResponse> call, Response<ReviewApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     reviews.postValue(response.body());
-                }
-                else {
+                } else {
                     Log.e(TAG, "onResponse: getReviewList failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
                 }
             }
@@ -105,11 +105,17 @@ public class MovieRepository {
 
     public LiveData<Favorite> getFavoriteById(final long movieId) {
 
-        final MutableLiveData<Favorite> favorite = new MutableLiveData<>();
+        final MediatorLiveData<Favorite> favorite = new MediatorLiveData<>();
         new AppExecutors().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                favorite.postValue(database.favoriteDao().getFavoriteById(movieId).getValue());
+                favorite.addSource(database.favoriteDao().getFavoriteById(movieId), new Observer<Favorite>() {
+                    @Override
+                    public void onChanged(Favorite favoriteMovie) {
+                        favorite.postValue(favoriteMovie);
+                    }
+                });
+
             }
         });
 

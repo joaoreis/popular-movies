@@ -73,8 +73,10 @@ public class MovieDetailActivity extends AppCompatActivity {
             public void onChanged(Favorite favorite) {
                 if (favorite == null) {
                     ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
+                    viewModel.setFavorite(false);
                 } else {
                     ivStar.setImageResource(R.drawable.ic_star_yellow_48dp);
+                    viewModel.setFavorite(true);
 
                 }
             }
