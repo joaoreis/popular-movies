@@ -61,4 +61,4 @@ public class MovieApiResponse {
     }
 }
 
-//{"page":1,"total_results":19797,"total_pages":990,"results":
+//{"page":1,"total_results":19797,"total_pages":990,"trailers":

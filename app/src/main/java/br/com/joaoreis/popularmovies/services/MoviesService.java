@@ -2,6 +2,8 @@ package br.com.joaoreis.popularmovies.services;
 
 import br.com.joaoreis.popularmovies.BuildConfig;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
+import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,12 +27,17 @@ public class MoviesService implements TheMovieDBApi {
     }
 
     @Override
-    public Call<MovieApiResponse> getPopularMovies(String key) {
-        return movieApi.getPopularMovies(API_KEY);
+    public Call<MovieApiResponse> getMovies(String sortBy, String key) {
+        return movieApi.getMovies(sortBy, key);
     }
 
     @Override
-    public Call<MovieApiResponse> getTopRatedMovies(String key) {
-        return movieApi.getTopRatedMovies(API_KEY);
+    public Call<TrailerApiResponse> getTrailers(Long movieId, String key) {
+        return movieApi.getTrailers(movieId, key);
+    }
+
+    @Override
+    public Call<ReviewApiResponse> getReviews(Long movieId, String key) {
+        return movieApi.getReviews(movieId,key);
     }
 }
