@@ -30,9 +30,10 @@ public class HomeViewModel extends AndroidViewModel {
     //TODO: no dependecy injection, refactor
     public HomeViewModel(Application application) {
         super(application);
-        movieRepo = new MovieRepository();
-        movieList = new MutableLiveData<>();
         database = AppDatabase.getInstance(application);
+        movieRepo = new MovieRepository(database);
+        movieList = new MutableLiveData<>();
+
     }
 
     @Inject

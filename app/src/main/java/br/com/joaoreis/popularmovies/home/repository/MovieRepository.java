@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 import javax.inject.Singleton;
 
 import br.com.joaoreis.popularmovies.database.AppDatabase;
+import br.com.joaoreis.popularmovies.database.AppExecutors;
+import br.com.joaoreis.popularmovies.database.Favorite;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
@@ -25,12 +27,14 @@ public class MovieRepository {
     private final MutableLiveData<ReviewApiResponse> reviews;
     private MutableLiveData<MovieApiResponse> movies;
     private final MutableLiveData<TrailerApiResponse> trailers;
+    private final AppDatabase database;
 
-    public MovieRepository() {
+    public MovieRepository(AppDatabase database) {
         moviesService = new MoviesService();
         movies = new MutableLiveData<>();
         trailers = new MutableLiveData<>();
         reviews = new MutableLiveData<>();
+        this.database = database;
     }
 
     public LiveData<MovieApiResponse> getMovies(String sortBy) {
@@ -97,5 +101,18 @@ public class MovieRepository {
         });
 
         return reviews;
+    }
+
+    public LiveData<Favorite> getFavoriteById(final long movieId) {
+
+        final MutableLiveData<Favorite> favorite = new MutableLiveData<>();
+        new AppExecutors().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                favorite.postValue(database.favoriteDao().getFavoriteById(movieId).getValue());
+            }
+        });
+
+        return favorite;
     }
 }

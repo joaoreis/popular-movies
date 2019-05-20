@@ -25,30 +25,31 @@ public class MovieDetailViewModel extends AndroidViewModel {
     private LiveData<ReviewApiResponse> reviewList;
     private LiveData<TrailerApiResponse> trailerList;
     private LiveData<Favorite> favorite;
+    private boolean isFavorite;
 
-    public MovieDetailViewModel(Application application) {
-        super(application);
-        movieRepo = new MovieRepository();
-        movie = new MutableLiveData<>();
-        reviewList = new MutableLiveData<>();
-        trailerList = new MutableLiveData<>();
-
-        database = AppDatabase.getInstance(application);
-        favorite = new MutableLiveData<>();
+    public boolean isFavorite() {
+        return isFavorite;
     }
 
-    @Inject
-    public MovieDetailViewModel(Application application, MovieRepository movieRepo) {
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public MovieDetailViewModel(Application application, Movie movie) {
         super(application);
-        this.movieRepo = movieRepo;
-        movie = new MutableLiveData<>();
+        database = AppDatabase.getInstance(application);
+        movieRepo = new MovieRepository(database);
+        this.movie = new MutableLiveData<>();
+        this.movie.postValue(movie);
         reviewList = new MutableLiveData<>();
         trailerList = new MutableLiveData<>();
 
-        database = AppDatabase.getInstance(application);
         favorite = new MutableLiveData<>();
-        //TODO:remember to delete
-        database.favoriteDao().deleteAllFavorites();
+        favorite = movieRepo.getFavoriteById(movie.getId());
+    }
+
+    public LiveData<Favorite> getFavorite() {
+        return favorite;
     }
 
     public void setMovie(Movie movie) {
@@ -67,25 +68,6 @@ public class MovieDetailViewModel extends AndroidViewModel {
     public LiveData<TrailerApiResponse> getTrailerList() {
         trailerList = movieRepo.getTrailers(movie.getValue().getId());
         return trailerList;
-    }
-
-    private LiveData<Favorite> getFavorite() {
-        final long id = movie.getValue().getId();
-
-        new AppExecutors().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                favorite = database.favoriteDao().getFavoriteById(id);
-            }
-        });
-
-        return favorite;
-    }
-
-    public LiveData<Boolean> isMovieFavorite() {
-        LiveData<Boolean> isFavorite = new MutableLiveData<>();
-        ((MutableLiveData<Boolean>) isFavorite).setValue(getFavorite().getValue() != null);
-        return isFavorite;
     }
 
     public void addFavorite() {
