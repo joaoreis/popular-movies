@@ -8,20 +8,22 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import br.com.joaoreis.popularmovies.home.model.Movie;
+
 @Dao
 public interface FavoriteDao {
 
     @Query("SELECT * FROM favorites ORDER BY id")
-    LiveData<List<Favorite>> getAllFavorites();
+    LiveData<List<Movie>> getAllFavorites();
 
     @Query("SELECT * FROM favorites WHERE id = :id")
-    LiveData<Favorite> getFavoriteById(long id);
+    LiveData<Movie> getFavoriteById(long id);
 
     @Insert
-    void insertFavorite(Favorite favorite);
+    void insertFavorite(Movie favorite);
 
     @Delete
-    void deleteFavorite(Favorite favorite);
+    void deleteFavorite(Movie favorite);
 
     @Query("DELETE FROM favorites")
     void deleteAllFavorites();

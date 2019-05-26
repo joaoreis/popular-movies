@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 import br.com.joaoreis.popularmovies.database.AppDatabase;
 import br.com.joaoreis.popularmovies.database.AppExecutors;
-import br.com.joaoreis.popularmovies.database.Favorite;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.home.repository.MovieRepository;
@@ -25,7 +24,7 @@ public class HomeViewModel extends AndroidViewModel {
 
     private static final String POPULAR = "popular";
     private static final String TOP_RATED = "top_rated";
-    private LiveData<List<Favorite>> allFavorites;
+    private LiveData<List<Movie>> allFavorites;
 
     //TODO: no dependecy injection, refactor
     public HomeViewModel(Application application) {
@@ -54,7 +53,7 @@ public class HomeViewModel extends AndroidViewModel {
         return this.movieList;
     }
 
-    public LiveData<List<Favorite>> getAllFavorites() {
+    public LiveData<List<Movie>> getAllFavorites() {
 
         new AppExecutors().diskIO().execute(new Runnable() {
             @Override
@@ -65,7 +64,4 @@ public class HomeViewModel extends AndroidViewModel {
         return allFavorites;
     }
 
-    private Movie getMovieFromFavorite(Favorite favorite) {
-        return null;
-    }
 }

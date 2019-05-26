@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 
 import br.com.joaoreis.popularmovies.database.AppDatabase;
 import br.com.joaoreis.popularmovies.database.AppExecutors;
-import br.com.joaoreis.popularmovies.database.Favorite;
+import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
@@ -103,16 +103,16 @@ public class MovieRepository {
         return reviews;
     }
 
-    public LiveData<Favorite> getFavoriteById(final long movieId) {
+    public LiveData<Movie> getFavoriteById(final long movieId) {
 
-        final MediatorLiveData<Favorite> favorite = new MediatorLiveData<>();
+        final MediatorLiveData<Movie> favorite = new MediatorLiveData<>();
         new AppExecutors().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                favorite.addSource(database.favoriteDao().getFavoriteById(movieId), new Observer<Favorite>() {
+                favorite.addSource(database.favoriteDao().getFavoriteById(movieId), new Observer<Movie>() {
                     @Override
-                    public void onChanged(Favorite favoriteMovie) {
-                        favorite.postValue(favoriteMovie);
+                    public void onChanged(Movie movie) {
+                        favorite.postValue(movie);
                     }
                 });
 

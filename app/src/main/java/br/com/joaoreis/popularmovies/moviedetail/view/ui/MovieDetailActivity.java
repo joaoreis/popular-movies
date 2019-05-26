@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -23,7 +22,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import br.com.joaoreis.popularmovies.R;
-import br.com.joaoreis.popularmovies.database.Favorite;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.view.ui.HomeActivity;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
@@ -68,9 +66,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         setupViewModel(movie);
         loadMovieData(movie);
 
-        viewModel.getFavorite().observe(MovieDetailActivity.this, new Observer<Favorite>() {
+        viewModel.getFavorite().observe(MovieDetailActivity.this, new Observer<Movie>() {
             @Override
-            public void onChanged(Favorite favorite) {
+            public void onChanged(Movie favorite) {
                 if (favorite == null) {
                     ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
                     viewModel.setFavorite(false);

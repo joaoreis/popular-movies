@@ -32,7 +32,7 @@ public class MovieDetailViewModelTest {
     @Test
     public void getFavorite() {
 
-        LiveData<Favorite> favorite = viewModel.getFavorite();
+        LiveData<Movie> favorite = viewModel.getFavorite();
         assertThat(favorite.getValue(), is(viewModel.getFavorite().getValue()));
     }
 
