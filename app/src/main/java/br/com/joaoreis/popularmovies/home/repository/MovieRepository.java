@@ -7,6 +7,8 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import java.util.List;
+
 import javax.inject.Singleton;
 
 import br.com.joaoreis.popularmovies.database.AppDatabase;
@@ -120,5 +122,18 @@ public class MovieRepository {
         });
 
         return favorite;
+    }
+
+    public LiveData<MovieApiResponse> getAllFavorites() {
+
+        new AppExecutors().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                MovieApiResponse movieApiResponse = new MovieApiResponse();
+                LiveData<List<Movie>> allFavorites = database.favoriteDao().getAllFavorites();
+                movieApiResponse.setMovies(allFavorites.getValue());
+            }
+        });
+        return movies;
     }
 }

@@ -21,7 +21,8 @@
             />
 
 
-        <activity android:name=".home.view.ui.HomeActivity">
+        <activity android:name=".home.view.ui.HomeActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
