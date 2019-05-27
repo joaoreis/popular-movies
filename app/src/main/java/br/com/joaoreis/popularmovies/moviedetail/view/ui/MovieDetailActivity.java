@@ -66,7 +66,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         setupViewModel(movie);
         loadMovieData(movie);
 
-        viewModel.getFavorite().observe(MovieDetailActivity.this, new Observer<Movie>() {
+        viewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie favorite) {
                 if (favorite == null) {
