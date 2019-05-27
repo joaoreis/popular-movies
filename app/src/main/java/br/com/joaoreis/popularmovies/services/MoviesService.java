@@ -1,9 +1,12 @@
 package br.com.joaoreis.popularmovies.services;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import br.com.joaoreis.popularmovies.BuildConfig;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,6 +23,8 @@ public class MoviesService implements TheMovieDBApi {
     public MoviesService() {
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor()).build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

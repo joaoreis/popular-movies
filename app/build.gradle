@@ -68,4 +68,7 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.21'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.21'
 
+    debugImplementation "com.facebook.stetho:stetho:1.5.1"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:1.5.1"
+
 }
