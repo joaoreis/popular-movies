@@ -129,9 +129,8 @@ public class MovieRepository {
         new AppExecutors().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                MovieApiResponse movieApiResponse = new MovieApiResponse();
                 LiveData<List<Movie>> allFavorites = database.favoriteDao().getAllFavorites();
-                movieApiResponse.setMovies(allFavorites.getValue());
+                movies.getValue().setMovies(allFavorites.getValue());
             }
         });
         return movies;
