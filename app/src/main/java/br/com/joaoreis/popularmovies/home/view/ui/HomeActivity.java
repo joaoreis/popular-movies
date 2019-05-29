@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, MovieDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(EXTRA_MOVIE, movie);
-                intent.putExtra(EXTRA_MOVIE,bundle);
+                intent.putExtra(EXTRA_MOVIE, bundle);
 
                 startActivity(intent);
             }
@@ -79,7 +79,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChanged(MovieApiResponse movieApiResponse) {
                 moviePosterAdapter.setMovies(movieApiResponse.getMovies());
-
             }
         });
     }

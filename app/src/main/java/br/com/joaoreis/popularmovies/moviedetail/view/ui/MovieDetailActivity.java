@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -32,6 +31,7 @@ import br.com.joaoreis.popularmovies.moviedetail.view.adapter.OnTrailerItemClick
 import br.com.joaoreis.popularmovies.moviedetail.view.adapter.ReviewAdapter;
 import br.com.joaoreis.popularmovies.moviedetail.view.adapter.TrailerAdapter;
 import br.com.joaoreis.popularmovies.moviedetail.viewmodel.MovieDetailViewModel;
+import br.com.joaoreis.popularmovies.moviedetail.viewmodel.MovieDetailViewModelFactory;
 
 import static br.com.joaoreis.popularmovies.home.view.adapter.MovieAdapter.BASE_URL;
 
@@ -52,7 +52,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private RecyclerView trailersRecyclerView;
     private TrailerAdapter trailerAdapter;
-    private LiveData<Boolean> isFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +66,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         setupViewModel(movie);
         loadMovieData(movie);
 
-//        viewModel.isMovieFavorite().observe();
+        viewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie favorite) {
+                if (favorite == null) {
+                    ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
+                    viewModel.setFavorite(false);
+                } else {
+                    ivStar.setImageResource(R.drawable.ic_star_yellow_48dp);
+                    viewModel.setFavorite(true);
 
+                }
+            }
+        });
     }
 
     private void setupViews() {
@@ -126,27 +136,24 @@ public class MovieDetailActivity extends AppCompatActivity {
         ivStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.isMovieFavorite().observe(MovieDetailActivity.this, new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean aBoolean) {
-                        if (aBoolean) {
-                            Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_add_favorites), Toast.LENGTH_SHORT).show();
-                            ivStar.setImageResource(R.drawable.ic_star_yellow_48dp);
-                            viewModel.addFavorite();
-                        } else {
-                            Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_remove_favorites), Toast.LENGTH_SHORT).show();
-                            ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
-                            viewModel.removeFavorite();
-                        }
 
-                    }
-                });
+                if (viewModel.isFavorite()) {
+                    Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_remove_favorites), Toast.LENGTH_SHORT).show();
+                    ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
+                    viewModel.removeFavorite();
+                    viewModel.setFavorite(false);
+                } else {
+                    Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_add_favorites), Toast.LENGTH_SHORT).show();
+                    ivStar.setImageResource(R.drawable.ic_star_yellow_48dp);
+                    viewModel.addFavorite();
+                    viewModel.setFavorite(true);
+                }
             }
         });
     }
 
     private void setupViewModel(Movie movie) {
-        viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
+        viewModel = ViewModelProviders.of(this, new MovieDetailViewModelFactory(getApplication(), movie)).get(MovieDetailViewModel.class);
         viewModel.setMovie(movie);
 
         viewModel.getReviewList().observe(this, new Observer<ReviewApiResponse>() {

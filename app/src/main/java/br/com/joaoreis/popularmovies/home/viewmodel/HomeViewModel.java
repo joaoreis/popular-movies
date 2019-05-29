@@ -6,14 +6,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import br.com.joaoreis.popularmovies.database.AppDatabase;
-import br.com.joaoreis.popularmovies.database.AppExecutors;
-import br.com.joaoreis.popularmovies.database.Favorite;
-import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.home.repository.MovieRepository;
 
@@ -25,14 +20,14 @@ public class HomeViewModel extends AndroidViewModel {
 
     private static final String POPULAR = "popular";
     private static final String TOP_RATED = "top_rated";
-    private LiveData<List<Favorite>> allFavorites;
 
     //TODO: no dependecy injection, refactor
     public HomeViewModel(Application application) {
         super(application);
-        movieRepo = new MovieRepository();
-        movieList = new MutableLiveData<>();
         database = AppDatabase.getInstance(application);
+        movieRepo = new MovieRepository(database);
+        movieList = new MutableLiveData<>();
+
     }
 
     @Inject
@@ -53,18 +48,10 @@ public class HomeViewModel extends AndroidViewModel {
         return this.movieList;
     }
 
-    public LiveData<List<Favorite>> getAllFavorites() {
+    public LiveData<MovieApiResponse> getAllFavorites() {
 
-        new AppExecutors().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                allFavorites = database.favoriteDao().getAllFavorites();
-            }
-        });
-        return allFavorites;
+        movieList = movieRepo.getAllFavorites();
+        return this.movieList;
     }
 
-    private Movie getMovieFromFavorite(Favorite favorite) {
-        return null;
-    }
 }

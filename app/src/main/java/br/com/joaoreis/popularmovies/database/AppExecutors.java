@@ -18,6 +18,7 @@ package br.com.joaoreis.popularmovies.database;
 
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 

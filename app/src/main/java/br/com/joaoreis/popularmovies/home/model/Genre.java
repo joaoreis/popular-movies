@@ -3,12 +3,11 @@ package br.com.joaoreis.popularmovies.home.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Genre implements Parcelable
-{
+public class Genre implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -20,7 +19,7 @@ public class Genre implements Parcelable
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public Genre createFromParcel(Parcel in) {
             return new Genre(in);
@@ -30,8 +29,12 @@ public class Genre implements Parcelable
             return (new Genre[size]);
         }
 
+    };
+
+    public Genre(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
-    ;
 
     protected Genre(Parcel in) {
         this.id = ((Long) in.readValue((Long.class.getClassLoader())));
@@ -63,7 +66,7 @@ public class Genre implements Parcelable
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

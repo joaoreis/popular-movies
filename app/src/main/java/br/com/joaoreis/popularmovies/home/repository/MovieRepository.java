@@ -3,11 +3,17 @@ package br.com.joaoreis.popularmovies.home.repository;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+
+import java.util.List;
 
 import javax.inject.Singleton;
 
 import br.com.joaoreis.popularmovies.database.AppDatabase;
+import br.com.joaoreis.popularmovies.database.AppExecutors;
+import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.TrailerApiResponse;
@@ -25,12 +31,14 @@ public class MovieRepository {
     private final MutableLiveData<ReviewApiResponse> reviews;
     private MutableLiveData<MovieApiResponse> movies;
     private final MutableLiveData<TrailerApiResponse> trailers;
+    private final AppDatabase database;
 
-    public MovieRepository() {
+    public MovieRepository(AppDatabase database) {
         moviesService = new MoviesService();
         movies = new MutableLiveData<>();
         trailers = new MutableLiveData<>();
         reviews = new MutableLiveData<>();
+        this.database = database;
     }
 
     public LiveData<MovieApiResponse> getMovies(String sortBy) {
@@ -62,8 +70,7 @@ public class MovieRepository {
             public void onResponse(Call<TrailerApiResponse> call, Response<TrailerApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     trailers.postValue(response.body());
-                }
-                else {
+                } else {
                     Log.e(TAG, "onResponse: getTrailers failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
                 }
             }
@@ -84,8 +91,7 @@ public class MovieRepository {
             public void onResponse(Call<ReviewApiResponse> call, Response<ReviewApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     reviews.postValue(response.body());
-                }
-                else {
+                } else {
                     Log.e(TAG, "onResponse: getReviewList failed or body is null: \n" + response.isSuccessful() + "\n" + response.body().toString());
                 }
             }
@@ -97,5 +103,36 @@ public class MovieRepository {
         });
 
         return reviews;
+    }
+
+    public LiveData<Movie> getFavoriteById(final long movieId) {
+
+        final MediatorLiveData<Movie> favorite = new MediatorLiveData<>();
+        new AppExecutors().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                favorite.addSource(database.favoriteDao().getFavoriteById(movieId), new Observer<Movie>() {
+                    @Override
+                    public void onChanged(Movie movie) {
+                        favorite.postValue(movie);
+                    }
+                });
+
+            }
+        });
+
+        return favorite;
+    }
+
+    public LiveData<MovieApiResponse> getAllFavorites() {
+
+        new AppExecutors().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                LiveData<List<Movie>> allFavorites = database.favoriteDao().getAllFavorites();
+                movies.getValue().setMovies(allFavorites.getValue());
+            }
+        });
+        return movies;
     }
 }
