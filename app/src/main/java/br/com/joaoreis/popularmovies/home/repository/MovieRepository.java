@@ -114,13 +114,12 @@ public class MovieRepository {
                 favorite.addSource(database.favoriteDao().getFavoriteById(movieId), new Observer<Movie>() {
                     @Override
                     public void onChanged(Movie movie) {
-                        favorite.postValue(movie);
+                        favorite.setValue(movie);
                     }
                 });
 
             }
         });
-
         return favorite;
     }
 

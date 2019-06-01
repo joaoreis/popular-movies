@@ -69,13 +69,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         viewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie favorite) {
-                if (favorite == null) {
-                    ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
-                    viewModel.setFavorite(false);
+                if (viewModel.isFavorite()) {
+                    movieIsFavorite();
                 } else {
-                    ivStar.setImageResource(R.drawable.ic_star_yellow_48dp);
-                    viewModel.setFavorite(true);
-
+                    movieIsNotFavorite();
                 }
             }
         });
@@ -138,15 +135,15 @@ public class MovieDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (viewModel.isFavorite()) {
-                    Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_remove_favorites), Toast.LENGTH_SHORT).show();
-                    ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
                     viewModel.removeFavorite();
-                    viewModel.setFavorite(false);
+                    movieIsNotFavorite();
+                    Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_remove_favorites), Toast.LENGTH_SHORT).show();
+
                 } else {
-                    Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_add_favorites), Toast.LENGTH_SHORT).show();
-                    ivStar.setImageResource(R.drawable.ic_star_yellow_48dp);
                     viewModel.addFavorite();
-                    viewModel.setFavorite(true);
+                    movieIsFavorite();
+                    Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_add_favorites), Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -169,6 +166,22 @@ public class MovieDetailActivity extends AppCompatActivity {
                 trailerAdapter.setTrailers(trailerApiResponse.getTrailers());
             }
         });
+
+        if (viewModel.isFavorite()) {
+            movieIsFavorite();
+        } else {
+            movieIsNotFavorite();
+        }
+    }
+
+    private void movieIsFavorite() {
+        ivStar.setImageResource(R.drawable.ic_star_yellow_48dp);
+        viewModel.setFavorite(true);
+    }
+
+    private void movieIsNotFavorite() {
+        ivStar.setImageResource(R.drawable.ic_star_border_yellow_48dp);
+        viewModel.setFavorite(false);
     }
 
     private void loadMovieData(Movie movie) {
@@ -181,7 +194,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         Date releaseDate = movie.getReleaseDate();
 
         tvMovieTitle.setText(movie.getTitle());
-        tvMovieReleaseDate.setText(new SimpleDateFormat("yyyy", Locale.getDefault()).format(releaseDate));
+        tvMovieReleaseDate.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(releaseDate));
         tvVoteAvg.setText(String.valueOf(movie.getVoteAverage()));
         tvOverview.setText(movie.getOverview());
 

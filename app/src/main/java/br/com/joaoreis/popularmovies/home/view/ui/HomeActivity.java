@@ -109,8 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                 viewModel.getTopRatedMovies();
                 return true;
 
-            case R.id.action_favorites:
-                viewModel.getAllFavorites();
+            case R.id.action_favorites: viewModel.getAllFavorites();
                 return true;
 
             default:
