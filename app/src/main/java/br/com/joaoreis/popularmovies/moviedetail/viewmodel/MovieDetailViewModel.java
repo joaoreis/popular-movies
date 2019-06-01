@@ -68,6 +68,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
                 database.favoriteDao().insertFavorite(movie.getValue());
             }
         });
+        isFavorite = true;
     }
 
     public void removeFavorite() {
@@ -77,6 +78,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
                 database.favoriteDao().deleteFavorite(movie.getValue());
             }
         });
+        isFavorite = false;
     }
 
 }
