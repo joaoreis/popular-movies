@@ -2,6 +2,8 @@ package br.com.joaoreis.popularmovies.home.view.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +26,7 @@ import br.com.joaoreis.popularmovies.moviedetail.view.ui.MovieDetailActivity;
 public class HomeActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE = "movie";
+    private static final String EXTRA_SCROLL_STATE = "SCROLL_STATE";
     private static int MINIMUM_COLUMNS = 2;
     private static int SCALING_FACTOR = 200;
     private static int N_COLUMNS;
@@ -113,5 +116,19 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Parcelable scrollState = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(EXTRA_SCROLL_STATE, scrollState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Parcelable scrollState = savedInstanceState.getParcelable(EXTRA_SCROLL_STATE);
+        recyclerView.getLayoutManager().onRestoreInstanceState(scrollState);
     }
 }
