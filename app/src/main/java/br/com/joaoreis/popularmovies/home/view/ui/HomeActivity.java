@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import br.com.joaoreis.popularmovies.R;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
@@ -84,6 +86,13 @@ public class HomeActivity extends AppCompatActivity {
                 moviePosterAdapter.setMovies(movieApiResponse.getMovies());
             }
         });
+
+        viewModel.getAllFavorites().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                moviePosterAdapter.setMovies(movies);
+            }
+        });
     }
 
     @Override
@@ -109,7 +118,8 @@ public class HomeActivity extends AppCompatActivity {
                 viewModel.getTopRatedMovies();
                 return true;
 
-            case R.id.action_favorites: viewModel.getAllFavorites();
+            case R.id.action_favorites:
+                viewModel.getAllFavorites();
                 return true;
 
             default:

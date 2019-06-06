@@ -3,16 +3,13 @@ package br.com.joaoreis.popularmovies.home.repository;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import java.util.List;
 
 import javax.inject.Singleton;
 
 import br.com.joaoreis.popularmovies.database.AppDatabase;
-import br.com.joaoreis.popularmovies.database.AppExecutors;
 import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.moviedetail.model.ReviewApiResponse;
@@ -106,32 +103,10 @@ public class MovieRepository {
     }
 
     public LiveData<Movie> getFavoriteById(final long movieId) {
-
-        final MediatorLiveData<Movie> favorite = new MediatorLiveData<>();
-        new AppExecutors().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                favorite.addSource(database.favoriteDao().getFavoriteById(movieId), new Observer<Movie>() {
-                    @Override
-                    public void onChanged(Movie movie) {
-                        favorite.setValue(movie);
-                    }
-                });
-
-            }
-        });
-        return favorite;
+        return database.favoriteDao().getFavoriteById(movieId);
     }
 
-    public LiveData<MovieApiResponse> getAllFavorites() {
-
-        new AppExecutors().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                LiveData<List<Movie>> allFavorites = database.favoriteDao().getAllFavorites();
-                movies.getValue().setMovies(allFavorites.getValue());
-            }
-        });
-        return movies;
+    public LiveData<List<Movie>> getAllFavorites() {
+       return database.favoriteDao().getAllFavorites();
     }
 }

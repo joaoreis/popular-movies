@@ -1,15 +1,17 @@
 package br.com.joaoreis.popularmovies.home.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import br.com.joaoreis.popularmovies.database.AppDatabase;
+import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.home.model.MovieApiResponse;
 import br.com.joaoreis.popularmovies.home.repository.MovieRepository;
 
@@ -49,10 +51,10 @@ public class HomeViewModel extends AndroidViewModel {
         return this.movieList;
     }
 
-    public LiveData<MovieApiResponse> getAllFavorites() {
-        movieList = movieRepo.getAllFavorites();
-        Log.d("HomeViewModel", "getAllFavorites:  Has Movies  " + movieList.getValue().getMovies().size());
-        return this.movieList;
+    public LiveData<List<Movie>> getAllFavorites() {
+        LiveData<List<Movie>> favoriteMovies = movieRepo.getAllFavorites();
+        return favoriteMovies;
+
     }
 
 }
