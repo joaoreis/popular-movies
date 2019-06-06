@@ -52,9 +52,7 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Movie>> getAllFavorites() {
-        LiveData<List<Movie>> favoriteMovies = movieRepo.getAllFavorites();
-        return favoriteMovies;
-
+        return movieRepo.getAllFavorites();
     }
 
 }

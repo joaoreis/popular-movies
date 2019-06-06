@@ -119,7 +119,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_favorites:
-                viewModel.getAllFavorites();
+                 viewModel.getAllFavorites();
                 return true;
 
             default:
