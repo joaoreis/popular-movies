@@ -87,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getAllFavorites().observe(this, new Observer<List<Movie>>() {
+        viewModel.getFavorites().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
                 moviePosterAdapter.setMovies(movies);
@@ -119,7 +119,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_favorites:
-                 viewModel.getAllFavorites();
+                viewModel.changeSort("Favorites");
                 return true;
 
             default:

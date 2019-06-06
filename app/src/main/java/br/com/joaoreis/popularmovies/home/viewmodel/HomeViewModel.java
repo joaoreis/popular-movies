@@ -2,9 +2,11 @@ package br.com.joaoreis.popularmovies.home.viewmodel;
 
 import android.app.Application;
 
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class HomeViewModel extends AndroidViewModel {
     private final MovieRepository movieRepo;
     private LiveData<MovieApiResponse> movieList;
     private final AppDatabase database;
+    private final MutableLiveData<String> sortBy;
+    private final LiveData<List<Movie>> favorites;
 
     private static final String POPULAR = "popular";
     private static final String TOP_RATED = "top_rated";
@@ -30,7 +34,13 @@ public class HomeViewModel extends AndroidViewModel {
         database = AppDatabase.getInstance(application);
         movieRepo = new MovieRepository(database);
         movieList = new MutableLiveData<>();
-
+        sortBy = new MutableLiveData<>();
+        favorites = Transformations.switchMap(sortBy, new Function<String, LiveData<List<Movie>>>() {
+            @Override
+            public LiveData<List<Movie>> apply(String input) {
+                return getAllFavorites();
+            }
+        });
     }
 
     @Inject
@@ -39,6 +49,13 @@ public class HomeViewModel extends AndroidViewModel {
         movieRepo = movieRepository;
         movieList = new MutableLiveData<>();
         database = AppDatabase.getInstance(application);
+        sortBy = new MutableLiveData<>();
+        favorites = Transformations.switchMap(sortBy, new Function<String, LiveData<List<Movie>>>() {
+            @Override
+            public LiveData<List<Movie>> apply(String input) {
+                return getAllFavorites();
+            }
+        });
     }
 
     public LiveData<MovieApiResponse> getPopularMovies() {
@@ -55,4 +72,11 @@ public class HomeViewModel extends AndroidViewModel {
         return movieRepo.getAllFavorites();
     }
 
+    public LiveData<List<Movie>> getFavorites() {
+        return favorites;
+    }
+
+    public void changeSort(String sort){
+        sortBy.postValue(sort);
+    }
 }

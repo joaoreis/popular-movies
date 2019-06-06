@@ -65,17 +65,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         setupViewModel(movie);
         loadMovieData(movie);
-
-        viewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
-            @Override
-            public void onChanged(Movie favorite) {
-                if (viewModel.isFavorite()) {
-                    movieIsFavorite();
-                } else {
-                    movieIsNotFavorite();
-                }
-            }
-        });
     }
 
     private void setupViews() {
@@ -143,7 +132,6 @@ public class MovieDetailActivity extends AppCompatActivity {
                     viewModel.addFavorite();
                     movieIsFavorite();
                     Toast.makeText(MovieDetailActivity.this, getApplicationContext().getString(R.string.toast_add_favorites), Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -167,11 +155,16 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
 
-        if (viewModel.isFavorite()) {
-            movieIsFavorite();
-        } else {
-            movieIsNotFavorite();
-        }
+//        viewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
+//            @Override
+//            public void onChanged(Movie favorite) {
+//                if (viewModel.isFavorite()) {
+//                    movieIsFavorite();
+//                } else {
+//                    movieIsNotFavorite();
+//                }
+//            }
+//        });
     }
 
     private void movieIsFavorite() {
