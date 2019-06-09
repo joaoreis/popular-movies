@@ -27,7 +27,7 @@ public class HomeViewModel extends AndroidViewModel {
 
     private static final String POPULAR = "popular";
     private static final String TOP_RATED = "top_rated";
-    private static int SelectedMenu;
+    private int selectedMenu;
 
     //TODO: no dependecy injection, refactor
     public HomeViewModel(Application application) {
@@ -60,13 +60,13 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public int getSelectedMenu() {
-        return SelectedMenu;
+        return selectedMenu;
     }
 
     public void setSelectedMenu(int selectedMenu) {
-        this.SelectedMenu = selectedMenu;
+        this.selectedMenu = selectedMenu;
     }
-
+    
     public LiveData<MovieApiResponse> getPopularMovies() {
         movieList = movieRepo.getMovies(POPULAR);
         return this.movieList;
