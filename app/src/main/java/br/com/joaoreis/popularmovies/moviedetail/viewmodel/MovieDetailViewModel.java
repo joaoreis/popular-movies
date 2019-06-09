@@ -41,8 +41,6 @@ public class MovieDetailViewModel extends AndroidViewModel {
         this.movie.postValue(movie);
         reviewList = new MutableLiveData<>();
         trailerList = new MutableLiveData<>();
-        isSaved = movieRepo.getFavoriteById(movie.getId());
-        isFavorite = (isSaved.getValue() != null);
 
     }
 
@@ -62,6 +60,11 @@ public class MovieDetailViewModel extends AndroidViewModel {
     public LiveData<TrailerApiResponse> getTrailerList() {
         trailerList = movieRepo.getTrailers(movie.getValue().getId());
         return trailerList;
+    }
+
+    public LiveData<Movie> getFavorite() {
+       isSaved = movieRepo.getFavoriteById(movie.getValue().getId());
+       return isSaved;
     }
 
     public void addFavorite() {

@@ -140,6 +140,14 @@ public class MovieDetailActivity extends AppCompatActivity {
     private void setupViewModel(Movie movie) {
         viewModel = ViewModelProviders.of(this, new MovieDetailViewModelFactory(getApplication(), movie)).get(MovieDetailViewModel.class);
         viewModel.setMovie(movie);
+        viewModel.getFavorite().observe(this, new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie movie) {
+                if (movie != null) {
+                    movieIsFavorite();
+                }
+            }
+        });
 
         viewModel.getReviewList().observe(this, new Observer<ReviewApiResponse>() {
             @Override
@@ -155,16 +163,16 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
 
-//        viewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
-//            @Override
-//            public void onChanged(Movie favorite) {
-//                if (viewModel.isFavorite()) {
-//                    movieIsFavorite();
-//                } else {
-//                    movieIsNotFavorite();
-//                }
-//            }
-//        });
+        viewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie favorite) {
+                if (viewModel.isFavorite()) {
+                    movieIsFavorite();
+                } else {
+                    movieIsNotFavorite();
+                }
+            }
+        });
     }
 
     private void movieIsFavorite() {

@@ -29,9 +29,11 @@ public class HomeActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE = "movie";
     private static final String EXTRA_SCROLL_STATE = "SCROLL_STATE";
-    private static int MINIMUM_COLUMNS = 2;
-    private static int SCALING_FACTOR = 200;
+    private static final String EXTRA_MENU_SELECTED = "MENU_SELECTED";
+    private static final int MINIMUM_COLUMNS = 2;
+    private static final int SCALING_FACTOR = 200;
     private static int N_COLUMNS;
+    private  int MENU_SELECTED = 0;
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private RecyclerView recyclerView;
@@ -87,6 +89,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
         viewModel.getFavorites().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
@@ -99,6 +102,19 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.order, menu);
+
+        switch (MENU_SELECTED) {
+            case 0:
+                onOptionsItemSelected(menu.findItem(R.id.action_popular));
+                break;
+            case 1:
+                onOptionsItemSelected(menu.findItem(R.id.action_topRated));
+                break;
+            case 2:
+                onOptionsItemSelected(menu.findItem(R.id.action_favorites));
+                break;
+
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -112,14 +128,17 @@ public class HomeActivity extends AppCompatActivity {
 
             case R.id.action_popular:
                 viewModel.getPopularMovies();
+                MENU_SELECTED = 0;
                 return true;
 
             case R.id.action_topRated:
                 viewModel.getTopRatedMovies();
+                MENU_SELECTED = 1;
                 return true;
 
             case R.id.action_favorites:
                 viewModel.changeSort("Favorites");
+                MENU_SELECTED = 2;
                 return true;
 
             default:
@@ -131,7 +150,9 @@ public class HomeActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         Parcelable scrollState = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putInt(EXTRA_MENU_SELECTED, MENU_SELECTED);
         outState.putParcelable(EXTRA_SCROLL_STATE, scrollState);
+
     }
 
     @Override
@@ -139,5 +160,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         Parcelable scrollState = savedInstanceState.getParcelable(EXTRA_SCROLL_STATE);
         recyclerView.getLayoutManager().onRestoreInstanceState(scrollState);
+        MENU_SELECTED = savedInstanceState.getInt(EXTRA_MENU_SELECTED);
     }
 }
