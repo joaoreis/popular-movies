@@ -21,7 +21,8 @@ public class MovieDetailViewModel extends AndroidViewModel {
     private MutableLiveData<Movie> movie;
     private LiveData<ReviewApiResponse> reviewList;
     private LiveData<TrailerApiResponse> trailerList;
-    ;
+    private LiveData<Movie> isSaved;
+
     private boolean isFavorite;
 
     public boolean isFavorite() {
@@ -40,6 +41,8 @@ public class MovieDetailViewModel extends AndroidViewModel {
         this.movie.postValue(movie);
         reviewList = new MutableLiveData<>();
         trailerList = new MutableLiveData<>();
+        isSaved = movieRepo.getFavoriteById(movie.getId());
+        isFavorite = (isSaved.getValue() != null);
 
     }
 
@@ -68,6 +71,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
                 database.favoriteDao().insertFavorite(movie.getValue());
             }
         });
+        isFavorite = true;
     }
 
     public void removeFavorite() {
@@ -77,6 +81,7 @@ public class MovieDetailViewModel extends AndroidViewModel {
                 database.favoriteDao().deleteFavorite(movie.getValue());
             }
         });
+        isFavorite = false;
     }
 
 }
