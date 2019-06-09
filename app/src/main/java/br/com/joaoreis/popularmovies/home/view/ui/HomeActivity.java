@@ -33,7 +33,6 @@ public class HomeActivity extends AppCompatActivity {
     private static final int MINIMUM_COLUMNS = 2;
     private static final int SCALING_FACTOR = 200;
     private static int N_COLUMNS;
-    private  int MENU_SELECTED = 0;
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     private RecyclerView recyclerView;
@@ -45,8 +44,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         N_COLUMNS = calculateNoOfColumns();
+
         setupViews();
         setupViewModel();
+
+        if (savedInstanceState != null) {
+            viewModel.setSelectedMenu(savedInstanceState.getInt(EXTRA_MENU_SELECTED));
+        }
 
     }
 
@@ -85,15 +89,27 @@ public class HomeActivity extends AppCompatActivity {
         viewModel.getPopularMovies().observe(this, new Observer<MovieApiResponse>() {
             @Override
             public void onChanged(MovieApiResponse movieApiResponse) {
-                moviePosterAdapter.setMovies(movieApiResponse.getMovies());
+                if (viewModel.getSelectedMenu() == 0) {
+                    moviePosterAdapter.setMovies(movieApiResponse.getMovies());
+                }
             }
         });
 
+        viewModel.getTopRatedMovies().observe(this, new Observer<MovieApiResponse>() {
+            @Override
+            public void onChanged(MovieApiResponse movieApiResponse) {
+                if (viewModel.getSelectedMenu() == 1) {
+                    moviePosterAdapter.setMovies(movieApiResponse.getMovies());
+                }
+            }
+        });
 
         viewModel.getFavorites().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-                moviePosterAdapter.setMovies(movies);
+                if (viewModel.getSelectedMenu() == 2) {
+                    moviePosterAdapter.setMovies(movies);
+                }
             }
         });
     }
@@ -102,19 +118,6 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.order, menu);
-
-        switch (MENU_SELECTED) {
-            case 0:
-                onOptionsItemSelected(menu.findItem(R.id.action_popular));
-                break;
-            case 1:
-                onOptionsItemSelected(menu.findItem(R.id.action_topRated));
-                break;
-            case 2:
-                onOptionsItemSelected(menu.findItem(R.id.action_favorites));
-                break;
-
-        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -127,18 +130,18 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_popular:
+                viewModel.setSelectedMenu(0);
                 viewModel.getPopularMovies();
-                MENU_SELECTED = 0;
                 return true;
 
             case R.id.action_topRated:
+                viewModel.setSelectedMenu(1);
                 viewModel.getTopRatedMovies();
-                MENU_SELECTED = 1;
                 return true;
 
             case R.id.action_favorites:
+                viewModel.setSelectedMenu(2);
                 viewModel.changeSort("Favorites");
-                MENU_SELECTED = 2;
                 return true;
 
             default:
@@ -150,7 +153,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         Parcelable scrollState = recyclerView.getLayoutManager().onSaveInstanceState();
-        outState.putInt(EXTRA_MENU_SELECTED, MENU_SELECTED);
+        outState.putInt(EXTRA_MENU_SELECTED, viewModel.getSelectedMenu());
         outState.putParcelable(EXTRA_SCROLL_STATE, scrollState);
 
     }
@@ -160,6 +163,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         Parcelable scrollState = savedInstanceState.getParcelable(EXTRA_SCROLL_STATE);
         recyclerView.getLayoutManager().onRestoreInstanceState(scrollState);
-        MENU_SELECTED = savedInstanceState.getInt(EXTRA_MENU_SELECTED);
+        viewModel.setSelectedMenu(savedInstanceState.getInt(EXTRA_MENU_SELECTED));
     }
 }
