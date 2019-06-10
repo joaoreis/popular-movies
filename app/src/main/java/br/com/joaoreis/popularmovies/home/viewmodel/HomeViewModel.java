@@ -42,6 +42,11 @@ public class HomeViewModel extends AndroidViewModel {
                 return getAllFavorites();
             }
         });
+        getPopularMovies();
+    }
+
+    public LiveData<MovieApiResponse> getMovieList() {
+        return movieList;
     }
 
     @Inject
@@ -57,6 +62,7 @@ public class HomeViewModel extends AndroidViewModel {
                 return getAllFavorites();
             }
         });
+        getPopularMovies();
     }
 
     public int getSelectedMenu() {
