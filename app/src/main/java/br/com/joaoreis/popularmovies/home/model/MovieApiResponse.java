@@ -64,5 +64,3 @@ public class MovieApiResponse {
                 "Movies: " + movies;
     }
 }
-
-//{"page":1,"total_results":19797,"total_pages":990,"trailers":

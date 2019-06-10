@@ -107,17 +107,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-//    private void setupViewModel() {
-//        viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-//
-//        viewModel.getFavorites().observe(this, new FavoriteMoviesObserver());
-//
-//        viewModel.getPopularMovies().observe(this, new PopularMoviesObserver());
-//
-//        viewModel.getTopRatedMovies().observe(this, new TopRatedMoviesObserver());
-//
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -168,35 +157,5 @@ public class HomeActivity extends AppCompatActivity {
         Parcelable scrollState = savedInstanceState.getParcelable(EXTRA_SCROLL_STATE);
         recyclerView.getLayoutManager().onRestoreInstanceState(scrollState);
         viewModel.setSelectedMenu(savedInstanceState.getInt(EXTRA_MENU_SELECTED));
-    }
-
-    class PopularMoviesObserver implements Observer<MovieApiResponse> {
-        @Override
-        public void onChanged(MovieApiResponse movieApiResponse) {
-            if (viewModel.getSelectedMenu() == 0) {
-                Log.d(TAG, "onChanged: POPULAR");
-                moviePosterAdapter.setMovies(movieApiResponse.getMovies());
-            }
-        }
-    }
-
-    class TopRatedMoviesObserver implements Observer<MovieApiResponse> {
-        @Override
-        public void onChanged(MovieApiResponse movieApiResponse) {
-            if (viewModel.getSelectedMenu() == 1) {
-                Log.d(TAG, "onChanged: TOPRATED");
-                moviePosterAdapter.setMovies(movieApiResponse.getMovies());
-            }
-        }
-    }
-
-    class FavoriteMoviesObserver implements Observer<List<Movie>> {
-        @Override
-        public void onChanged(List<Movie> movies) {
-            if (viewModel.getSelectedMenu() == 2) {
-                Log.d(TAG, "onChanged: FAVORITE");
-                moviePosterAdapter.setMovies(movies);
-            }
-        }
     }
 }
