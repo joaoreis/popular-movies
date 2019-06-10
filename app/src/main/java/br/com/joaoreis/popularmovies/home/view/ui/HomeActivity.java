@@ -87,13 +87,36 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewModel() {
         viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        viewModel.getMovieList().observe(this, new Observer<MovieApiResponse>() {
+            @Override
+            public void onChanged(MovieApiResponse movieApiResponse) {
 
-        viewModel.getPopularMovies().observe(this, new PopularMoviesObserver());
+                moviePosterAdapter.setMovies(movieApiResponse.getMovies());
 
-        viewModel.getTopRatedMovies().observe(this, new TopRatedMoviesObserver());
+            }
+        });
+        viewModel.getFavorites().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                if (viewModel.getSelectedMenu() == 2) {
+                    viewModel.getMovieList().getValue().setMovies(movies);
+                    moviePosterAdapter.setMovies(movies);
+                }
+            }
+        });
 
-        viewModel.getFavorites().observe(this, new FavoriteMoviesObserver());
     }
+
+//    private void setupViewModel() {
+//        viewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+//
+//        viewModel.getFavorites().observe(this, new FavoriteMoviesObserver());
+//
+//        viewModel.getPopularMovies().observe(this, new PopularMoviesObserver());
+//
+//        viewModel.getTopRatedMovies().observe(this, new TopRatedMoviesObserver());
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
