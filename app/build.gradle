@@ -1,11 +1,14 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id "org.sonarqube" version "3.3"
+}
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "br.com.joaoreis.popularmovies"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -23,6 +26,14 @@ android {
         unitTests.returnDefaultValues = true
     }
 
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "joaoreis_popular-movies"
+        property "sonar.organization", "joaoreisprivate"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
 
 repositories {
