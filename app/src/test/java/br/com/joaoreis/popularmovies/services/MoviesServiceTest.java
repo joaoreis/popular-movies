@@ -46,7 +46,7 @@ public class MoviesServiceTest {
 
     @Test
     public void gettrailers() throws IOException {
-        int movieId = 550;
+        Long movieId = 550L;
         Call<TrailerApiResponse> call = moviesService.getTrailers(movieId, apiKey);
         assertNotNull(call);
         Response<TrailerApiResponse> response = call.execute();
@@ -57,7 +57,7 @@ public class MoviesServiceTest {
 
     @Test
     public void getReviews() throws IOException {
-        int movieId = 550;
+        Long movieId = 550L;
         Call<ReviewApiResponse> call = moviesService.getReviews(movieId, apiKey);
         Response<ReviewApiResponse> response = call.execute();
         assertNotNull(response);
