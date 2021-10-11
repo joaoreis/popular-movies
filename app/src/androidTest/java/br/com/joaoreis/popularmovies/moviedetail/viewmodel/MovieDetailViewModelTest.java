@@ -1,5 +1,8 @@
 package br.com.joaoreis.popularmovies.moviedetail.viewmodel;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -9,11 +12,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import br.com.joaoreis.popularmovies.database.Favorite;
+import br.com.joaoreis.popularmovies.home.model.Movie;
 import br.com.joaoreis.popularmovies.moviedetail.view.ui.MovieDetailActivity;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MovieDetailViewModelTest {
@@ -36,9 +36,9 @@ public class MovieDetailViewModelTest {
         assertThat(favorite.getValue(), is(viewModel.getFavorite().getValue()));
     }
 
-    @Test
-    public void addFavorite() {
-//        viewModel.addFavorite();
-//        assertThat();
-    }
+//    @Test
+//    public void addFavorite() {
+////        viewModel.addFavorite();
+////        assertThat();
+//    }
 }
